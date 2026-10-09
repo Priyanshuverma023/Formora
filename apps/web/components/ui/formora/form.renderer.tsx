@@ -7,12 +7,16 @@ interface FormRendererProps {
   form: FormDefinition;
   selectedFieldId?: string;
   onFieldSelect?: (fieldId: string) => void;
+  onMoveField?: (fieldId: string, direction: "up" | "down") => void;
 }
 
 function renderField(
   field: FormField,
+  index: number,
+  totalFields: number,
   selectedFieldId: string | undefined,
   onFieldSelect: ((fieldId: string) => void) | undefined,
+  onMoveField: ((fieldId: string, direction: "up" | "down") => void) | undefined,
 ) {
   const isSelected = field.id === selectedFieldId;
 
@@ -24,6 +28,36 @@ function renderField(
       }`}
       onClick={() => onFieldSelect?.(field.id)}
     >
+      <div className="mb-3 flex items-center justify-end gap-2">
+        {index > 0 && (
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              onMoveField?.(field.id, "up");
+            }}
+            className="rounded-md border px-2 py-1 text-sm hover:bg-accent"
+            aria-label="Move field up"
+          >
+            ↑
+          </button>
+        )}
+
+        {index < totalFields - 1 && (
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              onMoveField?.(field.id, "down");
+            }}
+            className="rounded-md border px-2 py-1 text-sm hover:bg-accent"
+            aria-label="Move field down"
+          >
+            ↓
+          </button>
+        )}
+      </div>
+
       <FormoraField
         id={field.id}
         type={field.type}
@@ -35,7 +69,12 @@ function renderField(
   );
 }
 
-export function FormRenderer({ form, selectedFieldId, onFieldSelect }: FormRendererProps) {
+export function FormRenderer({
+  form,
+  selectedFieldId,
+  onFieldSelect,
+  onMoveField,
+}: FormRendererProps) {
   return (
     <form className="space-y-6" onSubmit={(event) => event.preventDefault()}>
       <div className="space-y-2">
@@ -45,7 +84,16 @@ export function FormRenderer({ form, selectedFieldId, onFieldSelect }: FormRende
       </div>
 
       <div className="space-y-5">
-        {form.fields.map((field) => renderField(field, selectedFieldId, onFieldSelect))}
+        {form.fields.map((field, index) =>
+          renderField(
+            field,
+            index,
+            form.fields.length,
+            selectedFieldId,
+            onFieldSelect,
+            onMoveField,
+          ),
+        )}
       </div>
 
       <button

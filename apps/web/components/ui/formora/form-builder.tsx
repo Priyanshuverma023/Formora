@@ -49,6 +49,37 @@ export function FormBuilder() {
     setSelectedFieldId(null);
   }
 
+  function moveField(fieldId: string, direction: "up" | "down") {
+    setForm((currentForm) => {
+      const currentIndex = currentForm.fields.findIndex((field) => field.id === fieldId);
+
+      if (currentIndex === -1) {
+        return currentForm;
+      }
+
+      const newIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1;
+
+      if (newIndex < 0 || newIndex >= currentForm.fields.length) {
+        return currentForm;
+      }
+
+      const fields = [...currentForm.fields];
+
+      const [movedField] = fields.splice(currentIndex, 1);
+
+      if (!movedField) {
+        return currentForm;
+      }
+
+      fields.splice(newIndex, 0, movedField);
+
+      return {
+        ...currentForm,
+        fields,
+      };
+    });
+  }
+
   function addField(type: FormField["type"]) {
     const labels: Record<FormField["type"], string> = {
       text: "New question",
@@ -130,6 +161,7 @@ export function FormBuilder() {
           form={form}
           selectedFieldId={selectedFieldId ?? undefined}
           onFieldSelect={setSelectedFieldId}
+          onMoveField={moveField}
         />
       </section>
       <FieldSettings
