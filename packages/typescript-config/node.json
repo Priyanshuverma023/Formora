@@ -1,9 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Node JS",
-  "extends": "./base.json",
-  "compilerOptions": {
-    "moduleResolution": "Node",
-    "module": "CommonJS"
-  }
+  "extends": "./base.json"
 }
