@@ -8,19 +8,13 @@ interface FieldSettingsProps {
   onDelete: () => void;
 }
 
-export function FieldSettings({
-  field,
-  onChange,
-  onDelete,
-}: FieldSettingsProps) {
+export function FieldSettings({ field, onChange, onDelete }: FieldSettingsProps) {
   if (!field) {
     return (
       <aside className="rounded-xl border bg-card p-5">
         <h2 className="font-semibold">Field settings</h2>
 
-        <p className="mt-2 text-sm text-muted-foreground">
-          Select a field to edit its settings.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">Select a field to edit its settings.</p>
       </aside>
     );
   }
@@ -31,9 +25,7 @@ export function FieldSettings({
         <div>
           <h2 className="font-semibold">Field settings</h2>
 
-          <p className="mt-1 text-sm text-muted-foreground">
-            Customize this field.
-          </p>
+          <p className="mt-1 text-sm text-muted-foreground">Customize this field.</p>
         </div>
 
         <div className="space-y-2">
@@ -54,10 +46,7 @@ export function FieldSettings({
         </div>
 
         <div className="space-y-2">
-          <label
-            htmlFor="field-placeholder"
-            className="text-sm font-medium"
-          >
+          <label htmlFor="field-placeholder" className="text-sm font-medium">
             Placeholder
           </label>
 
@@ -105,7 +94,6 @@ export function FieldSettings({
               })
             }
           />
-
           Required
         </label>
 

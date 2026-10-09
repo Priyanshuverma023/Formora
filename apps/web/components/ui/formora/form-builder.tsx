@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import type { FormDefinition } from "~/types/forms";
-import { FormRenderer } from "./form.renderer";
+import type { FormDefinition, FormField } from "~/types/forms";
 import { FieldSettings } from "./field-settings";
+import { FormRenderer } from "./form.renderer";
 
 const initialForm: FormDefinition = {
   id: "new-form",
@@ -18,7 +18,7 @@ export function FormBuilder() {
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
   const selectedField = form.fields.find((field) => field.id === selectedFieldId) ?? null;
 
-  function updateSelectedField(updates: Partial<typeof selectedField>) {
+  function updateSelectedField(updates: Partial<FormField>) {
     if (!selectedFieldId) {
       return;
     }
@@ -37,19 +37,17 @@ export function FormBuilder() {
   }
 
   function deleteSelectedField() {
-  if (!selectedFieldId) {
-    return;
+    if (!selectedFieldId) {
+      return;
+    }
+
+    setForm((currentForm) => ({
+      ...currentForm,
+      fields: currentForm.fields.filter((field) => field.id !== selectedFieldId),
+    }));
+
+    setSelectedFieldId(null);
   }
-
-  setForm((currentForm) => ({
-    ...currentForm,
-    fields: currentForm.fields.filter(
-      (field) => field.id !== selectedFieldId,
-    ),
-  }));
-
-  setSelectedFieldId(null);
-}
 
   function addTextField() {
     const newField = {
@@ -67,7 +65,7 @@ export function FormBuilder() {
   }
 
   return (
-    <div className="grid min-h-[600px] grid-cols-1 gap-6 lg:grid-cols-[240px_1fr]">
+    <div className="grid min-h-[600px] grid-cols-1 gap-6 xl:grid-cols-[220px_minmax(0,1fr)_280px]">
       {/* Builder Sidebar */}
       <aside className="rounded-xl border bg-card p-4">
         <div className="space-y-4">
@@ -94,6 +92,11 @@ export function FormBuilder() {
           onFieldSelect={setSelectedFieldId}
         />
       </section>
+      <FieldSettings
+        field={selectedField}
+        onChange={updateSelectedField}
+        onDelete={deleteSelectedField}
+      />
     </div>
   );
 }
