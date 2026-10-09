@@ -20,9 +20,7 @@ function renderField(
     <div
       key={field.id}
       className={`rounded-lg border p-4 transition-colors ${
-        isSelected
-          ? "border-primary bg-primary/5"
-          : "border-transparent hover:border-border"
+        isSelected ? "border-primary bg-primary/5" : "border-transparent hover:border-border"
       }`}
       onClick={() => onFieldSelect?.(field.id)}
     >
@@ -37,25 +35,17 @@ function renderField(
   );
 }
 
-export function FormRenderer({
-  form,
-  selectedFieldId,
-  onFieldSelect,
-}: FormRendererProps) {
+export function FormRenderer({ form, selectedFieldId, onFieldSelect }: FormRendererProps) {
   return (
-    <form className="space-y-6">
+    <form className="space-y-6" onSubmit={(event) => event.preventDefault()}>
       <div className="space-y-2">
         <h2 className="text-2xl font-bold">{form.title}</h2>
 
-        {form.description && (
-          <p className="text-muted-foreground">{form.description}</p>
-        )}
+        {form.description && <p className="text-muted-foreground">{form.description}</p>}
       </div>
 
       <div className="space-y-5">
-        {form.fields.map((field) =>
-          renderField(field, selectedFieldId, onFieldSelect),
-        )}
+        {form.fields.map((field) => renderField(field, selectedFieldId, onFieldSelect))}
       </div>
 
       <button

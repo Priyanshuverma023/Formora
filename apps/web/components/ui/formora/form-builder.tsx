@@ -49,12 +49,26 @@ export function FormBuilder() {
     setSelectedFieldId(null);
   }
 
-  function addTextField() {
-    const newField = {
+  function addField(type: FormField["type"]) {
+    const labels: Record<FormField["type"], string> = {
+      text: "New question",
+      email: "Email address",
+      number: "Number",
+      textarea: "Long answer",
+    };
+
+    const placeholders: Record<FormField["type"], string> = {
+      text: "Enter your answer",
+      email: "Enter your email",
+      number: "Enter a number",
+      textarea: "Enter your answer",
+    };
+
+    const newField: FormField = {
       id: crypto.randomUUID(),
-      type: "text" as const,
-      label: "New question",
-      placeholder: "Enter your answer",
+      type,
+      label: labels[type],
+      placeholder: placeholders[type],
       required: false,
     };
 
@@ -74,13 +88,39 @@ export function FormBuilder() {
             <p className="text-sm text-muted-foreground">Choose a field to add to your form.</p>
           </div>
 
-          <button
-            type="button"
-            onClick={addTextField}
-            className="w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-          >
-            + Text field
-          </button>
+          <div className="space-y-2">
+            <button
+              type="button"
+              onClick={() => addField("text")}
+              className="w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              + Text
+            </button>
+
+            <button
+              type="button"
+              onClick={() => addField("email")}
+              className="w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              + Email
+            </button>
+
+            <button
+              type="button"
+              onClick={() => addField("number")}
+              className="w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              + Number
+            </button>
+
+            <button
+              type="button"
+              onClick={() => addField("textarea")}
+              className="w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              + Textarea
+            </button>
+          </div>
         </div>
       </aside>
 
