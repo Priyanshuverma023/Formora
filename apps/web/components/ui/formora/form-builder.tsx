@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { FormDefinition, FormField } from "~/types/forms";
 import { FieldSettings } from "./field-settings";
+import { FormSettings } from "./form-settings";
 import { FormRenderer } from "./form.renderer";
 
 const initialForm: FormDefinition = {
@@ -78,6 +79,13 @@ export function FormBuilder() {
         fields,
       };
     });
+  }
+
+  function updateForm(updates: Partial<FormDefinition>) {
+    setForm((currentForm) => ({
+      ...currentForm,
+      ...updates,
+    }));
   }
 
   function addField(type: FormField["type"]) {
@@ -164,11 +172,15 @@ export function FormBuilder() {
           onMoveField={moveField}
         />
       </section>
-      <FieldSettings
-        field={selectedField}
-        onChange={updateSelectedField}
-        onDelete={deleteSelectedField}
-      />
+      <div className="space-y-6">
+        <FormSettings form={form} onChange={updateForm} />
+
+        <FieldSettings
+          field={selectedField}
+          onChange={updateSelectedField}
+          onDelete={deleteSelectedField}
+        />
+      </div>
     </div>
   );
 }
