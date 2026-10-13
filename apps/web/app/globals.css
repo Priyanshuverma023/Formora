@@ -121,3 +121,48 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+/* ========================================
+   FORMORA — APPLICATION DESIGN SYSTEM
+   ======================================== */
+
+:root {
+  /* Brand identity */
+  --formora-brand: #7856ff;
+  --formora-brand-hover: #6342ed;
+  --formora-brand-soft: #f0ebff;
+
+  /* Supporting colors */
+  --formora-coral: #ff786f;
+  --formora-yellow: #ffd166;
+  --formora-mint: #9be8c8;
+
+  /* Application surfaces */
+  --formora-app-background: #faf9ff;
+  --formora-surface: #ffffff;
+  --formora-surface-muted: #f5f3fb;
+
+  /* Typography */
+  --formora-text-primary: #25213a;
+  --formora-text-secondary: #77728d;
+
+  /* Borders */
+  --formora-border: #e8e4f2;
+  --formora-border-strong: #d4cbea;
+
+  /* Shape and depth */
+  --formora-radius-sm: 0.5rem;
+  --formora-radius-md: 0.875rem;
+  --formora-radius-lg: 1.25rem;
+  --formora-radius-xl: 1.75rem;
+
+  --formora-shadow-card:
+    0 4px 16px rgb(55 39 100 / 5%);
+
+  --formora-shadow-floating:
+    0 12px 32px rgb(55 39 100 / 10%);
+
+  /* Interaction */
+  --formora-focus-ring: 0 0 0 3px rgb(120 86 255 / 22%);
+}

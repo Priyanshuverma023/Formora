@@ -1,4 +1,4 @@
-export type ThemeId = "base";
+export type ThemeId = "base" | "cat";
 
 export interface ThemeColors {
   background: string;

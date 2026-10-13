@@ -1,5 +1,5 @@
 "use client";
-
+import { ThemeProvider } from "~/themes/provider";
 import { useState } from "react";
 import type { FormDefinition, FormField } from "~/types/forms";
 import { FieldSettings } from "./field-settings";
@@ -118,53 +118,56 @@ export function FormBuilder() {
   }
 
   return (
-    <div className="grid min-h-[600px] grid-cols-1 gap-6 xl:grid-cols-[220px_minmax(0,1fr)_280px]">
-      {/* Builder Sidebar */}
-      <aside className="rounded-xl border bg-card p-4">
-        <div className="space-y-4">
-          <div>
-            <h2 className="font-semibold">Add fields</h2>
-            <p className="text-sm text-muted-foreground">Choose a field to add to your form.</p>
-          </div>
-
-          <div className="space-y-2">
-            <button
-              type="button"
-              onClick={() => addField("text")}
-              className="w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-            >
-              + Text
-            </button>
-
-            <button
-              type="button"
-              onClick={() => addField("email")}
-              className="w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-            >
-              + Email
-            </button>
-
-            <button
-              type="button"
-              onClick={() => addField("number")}
-              className="w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-            >
-              + Number
-            </button>
-
-            <button
-              type="button"
-              onClick={() => addField("textarea")}
-              className="w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-            >
-              + Textarea
-            </button>
-          </div>
+  <div className="grid min-h-[600px] grid-cols-1 gap-6 xl:grid-cols-[220px_minmax(0,1fr)_280px]">
+    {/* Builder Sidebar — Formora application styling */}
+    <aside className="rounded-xl border bg-card p-4">
+      <div className="space-y-4">
+        <div>
+          <h2 className="font-semibold">Add fields</h2>
+          <p className="text-sm text-muted-foreground">
+            Choose a field to add to your form.
+          </p>
         </div>
-      </aside>
 
-      {/* Form Canvas */}
-      <section className="rounded-xl border bg-card p-6">
+        <div className="space-y-2">
+          <button
+            type="button"
+            onClick={() => addField("text")}
+            className="w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            + Text
+          </button>
+
+          <button
+            type="button"
+            onClick={() => addField("email")}
+            className="w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            + Email
+          </button>
+
+          <button
+            type="button"
+            onClick={() => addField("number")}
+            className="w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            + Number
+          </button>
+
+          <button
+            type="button"
+            onClick={() => addField("textarea")}
+            className="w-full rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            + Textarea
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    {/* Form Canvas — selected form theme */}
+    <ThemeProvider themeId={form.themeId}>
+      <section className="min-w-0 rounded-xl border bg-card p-6">
         <FormRenderer
           form={form}
           selectedFieldId={selectedFieldId ?? undefined}
@@ -172,15 +175,18 @@ export function FormBuilder() {
           onMoveField={moveField}
         />
       </section>
-      <div className="space-y-6">
-        <FormSettings form={form} onChange={updateForm} />
+    </ThemeProvider>
 
-        <FieldSettings
-          field={selectedField}
-          onChange={updateSelectedField}
-          onDelete={deleteSelectedField}
-        />
-      </div>
+    {/* Settings Panels — Formora application styling */}
+    <div className="space-y-6">
+      <FormSettings form={form} onChange={updateForm} />
+
+      <FieldSettings
+        field={selectedField}
+        onChange={updateSelectedField}
+        onDelete={deleteSelectedField}
+      />
     </div>
-  );
+  </div>
+);
 }
