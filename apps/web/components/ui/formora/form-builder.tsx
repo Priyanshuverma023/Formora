@@ -114,6 +114,8 @@ export function FormBuilder() {
     setForm((currentForm) => ({
       ...currentForm,
       fields: [...currentForm.fields, newField],
+    
+    
     }));
   }
 
